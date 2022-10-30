@@ -1,6 +1,7 @@
 FROM node:17 AS node
 FROM php:fpm
 
+# Use multi-stage build for cleate node.js environment
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
@@ -26,4 +27,3 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./php-fpm.d/zzz-www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
 
 WORKDIR /var/www/html
-
